@@ -158,6 +158,7 @@ function cg_register_settings() {
 	register_setting( 'cg-settings-group', 'what' );
 	register_setting( 'cg-settings-group', 'where' );
 	register_setting( 'cg-settings-group', 'publishercode' );
+	register_setting( 'cg-settings-group', 'show_ads' );
 }
 
 // check if debug is activated

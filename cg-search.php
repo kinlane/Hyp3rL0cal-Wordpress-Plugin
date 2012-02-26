@@ -37,13 +37,13 @@
 		{
 		?>	
 
-		<h3>
+		<strong>
 			<a href="#">Places</a> /
 			<a href="#"><?php echo $where;?></a> / 
 			<?php if($what!='') {?>
 				<a href="#"><?php echo $what;?></a>
 			<?php } ?>
-		</h3>
+		</strong>
 		
 		<br />
 	
@@ -73,6 +73,7 @@
 		$impression_id = $locations->impression_id;
 		$name = $locations->name;
 		$display_ad = $locations->display_ad;
+		if($display_ad==1) { $display_ad = 1; } else { $display_ad = 0; }
 		$teaser = $locations->teaser;
 		$business_operation_status = $locations->business_operation_status;
 		$address = $locations->address;
@@ -94,32 +95,35 @@
 		$display_phone = $contact_info->display_phone;
 		$display_url = $contact_info->display_url;
 	    ?>
-	
+		<br />
 		<address>
 			<strong><?php echo $name; ?></strong><br />
 			<?php echo $street; ?><br />
 			<?php echo $city; ?>, <?php echo $state; ?> <?php echo $postal_code; ?><br />
 			<abbr title="Phone">P:</abbr> <?php echo $display_phone; ?>
 		</address>	
-		
+			
 		<?php
-		// Display a Web Ad that is 630 x 100
-		$adid = 4;
-		$publisher = 'citysearch';
-		$citygridad = new citygridads($publishercode);
-		?>
-		<div id="detail_ad_slot_<?php echo $adid; ?>" align="center"></div>
-		<?php
-		echo $citygridad->display_web_ad_630_100('detail_ad_slot_'.$adid,$publisher,$what,$where);						
-		?>	
-	
-		<br />
-		<?php
+		// Only Display Ads if this record allows, otherwise against TOS / Usage Requirements
+		if($display_ad==1 && get_option('show_ads') == 'no') 
+			{
+			// Display a Web Ad that is 630 x 100
+			$adid = 4;
+			$publisher = 'citysearch';
+			$citygridad = new citygridads($publishercode);
+			?>
+			<div id="detail_ad_slot_<?php echo $adid; ?>" align="center"></div>
+			<?php
+			echo $citygridad->display_web_ad_630_100('detail_ad_slot_'.$adid,$publisher,$what,$where);						
+			?>
+			<br />
+			<?php		
+			}
 	
 	    if(isset($search->locations[0]->neighborhoods) && count($search->locations[0]->neighborhoods) > 0) {
 	    	?>
 			<div class="page-header">
-				<h3>Neighborhoods</h3>
+				<strong>Neighborhoods</strong>
 			</div>  
 			<ul>
 		     <?php
@@ -134,53 +138,56 @@
 	
 	    if(isset($search->locations[0]->urls) && count($search->locations[0]->urls) > 0) {
 	    	?>
-			<div class="page-header">
-				<h3>URLs</h3>
-			</div>  
-			<ul>
-		     <?php
-	    	 $urls = $search->locations[0]->urls;
-	    	 
-			 $profile_url = $urls->profile_url;
-			 $reviews_url = $urls->reviews_url;
-			 $video_url = $urls->video_url;
-			 $website_url = $urls->website_url;
-			 $menu_url = $urls->menu_url;
-			 $reservation_url = $urls->reservation_url;
-			 $map_url = $urls->map_url;
-			 $send_to_friend_url = $urls->send_to_friend_url;
-			 $email_link = $urls->email_link;
-			 $custom_link_1 = $urls->custom_link_1;
-			 $custom_link_2 = $urls->custom_link_2;
-			 $web_comment_url = $urls->web_comment_url;
-			 $web_article_url = $urls->web_article_url;
-			 $web_profile_url = $urls->web_profile_url;
-			 $web_rates_url = $urls->web_rates_url;
-			 $gift_url = $urls->gift_url;
-			 $request_quote_url = $urls->request_quote_url;
-			 $virtual_tour_url = $urls->virtual_tour_url;
-			 $book_limo_url = $urls->book_limo_url;
-			 $order_url = $urls->order_url;
-			 $custom_link_3 = $urls->custom_link_3;
-			 $custom_link_4 = $urls->custom_link_4;
-	    	 
-	    	 foreach($urls as $key => $urlvalue) {
-	    	 	if($urlvalue!='') {
-	    	 		
-	    	 		$key = str_replace("_"," ",$key);
-	    	 		$key = str_replace("url","URL",$key);
-	    	 		$key = ucfirst($key);
-	    	 		
-	    	 		if(is_string($urlvalue)) 
-	    	 			{
-	    	 			?>
-	    	 			<li><a href="<?php echo $urlvalue; ?>" target="_blank"><?php echo $key; ?></a></li>
-	    	 			<?php
-	    	 			}
-	    	 		}
-	    	 }
-		     ?>
-		     </ul>
+			<center>
+			<table width="100%">
+				<tr>
+				     <?php
+			    	 $urls = $search->locations[0]->urls;
+			    	 
+					 $profile_url = $urls->profile_url;
+					 $reviews_url = $urls->reviews_url;
+					 $video_url = $urls->video_url;
+					 $website_url = $urls->website_url;
+					 $menu_url = $urls->menu_url;
+					 $reservation_url = $urls->reservation_url;
+					 $map_url = $urls->map_url;
+					 $send_to_friend_url = $urls->send_to_friend_url;
+					 $email_link = $urls->email_link;
+					 $custom_link_1 = $urls->custom_link_1;
+					 $custom_link_2 = $urls->custom_link_2;
+					 $web_comment_url = $urls->web_comment_url;
+					 $web_article_url = $urls->web_article_url;
+					 $web_profile_url = $urls->web_profile_url;
+					 $web_rates_url = $urls->web_rates_url;
+					 $gift_url = $urls->gift_url;
+					 $request_quote_url = $urls->request_quote_url;
+					 $virtual_tour_url = $urls->virtual_tour_url;
+					 $book_limo_url = $urls->book_limo_url;
+					 $order_url = $urls->order_url;
+					 $custom_link_3 = $urls->custom_link_3;
+					 $custom_link_4 = $urls->custom_link_4;
+			    	 
+			    	 foreach($urls as $key => $urlvalue) {
+			    	 	if($urlvalue!='') {
+			    	 		
+			    	 		$key = str_replace("_"," ",$key);
+			    	 		$key = str_replace("url","",$key);
+			    	 		$key = ucfirst($key);
+			    	 		
+			    	 		if(is_string($urlvalue) && trim($key) != 'Profile' && trim($key) != 'Reviews') 
+			    	 			{	    	 				
+			    	 			?>
+			    	 			<td style="background-color: #000; padding: 10px; text-align: center;">
+			    	 				<a href="<?php echo $urlvalue; ?>" target="_blank" style="color:#FFF;"><?php echo $key; ?></a>
+			    	 			</td>
+			    	 			<?php
+			    	 			}
+			    	 		}
+			    	 }
+				     ?>
+		     	</tr>
+		     </table>
+		     </center>
 		     <?php    	 	
 	    	}
 	
@@ -191,16 +198,20 @@
 			 $customer_message = $customer_content->customer_message;	 	 
 			 
 			 $attribution_source = $customer_message->attribution_source;
+			 $attribution_logo = $customer_message->attribution_logo;
 			 $attribution_text = $customer_message->attribution_text;
-			 
+			 $attribution_url = $customer_message->attribution_url;
 			 $attribution_value = $customer_message->value;
-			 
+	 
 			if($attribution_text != '') {
 		    	?>
 				<div class="page-header">
-					<h3>Customer Content</h3>
+					<strong>Customer Content</strong>
 				</div>     
-				<p><strong>From <?php echo $attribution_text;?></strong> - <?php echo $attribution_value;?></p>
+				<p>
+					<?php if($attribution_logo!='') { ?><img src="<?php echo $attribution_logo; ?>" width="150" align="left" style="padding: 15px;" /><?php } ?>
+					<strong>From <a href="<?php echo $attribution_url; ?>"><?php echo $attribution_text;?></a></strong> - <?php echo $attribution_value;?>
+				</p>
 			    <?php
 		    	}
 	    	
@@ -221,18 +232,50 @@
 		 
 	    if(isset($search->locations[0]->offers) && count($search->locations[0]->offers) > 0) {
 	    	?>
+	    	<br />
 			<div class="page-header">
-				<h3>Offers</h3>
+				<strong>Offers</strong>
 			</div>     
 		     <?php	 
 	     $offers = $search->locations[0]->offers;
-		 var_dump($offers);	 
+	     ?>
+	     <ul>
+	     <?php
+		 foreach($offers as $offer) {
+		 	if($value!='') {
+	
+				$offer_id = $offer->offer_id;
+				$offer_name = $offer->offer_name;
+				$offer_text = $offer->offer_text;
+				$offer_description = $offer->offer_description;
+				$offer_url = $offer->offer_url;
+				$offer_expiration_date = $offer->offer_expiration_date;
+				$attribution_source = $offer->attribution_source;
+				$attribution_logo = $offer->attribution_logo;
+				$attribution_text = $offer->attribution_text;
+				$attribution_url = $offer->attribution_url;
+	
+	 			?>
+	 			<li>
+	 				<a href="<?php echo $offer_url;?>" target="_blank">
+	 				<?php echo $offer_name;?></a>
+	 				<?php if($offer_text!='') { ?>- <?php echo $offer_text; }?>
+	 				<?php if($offer_description!='') { ?>- <?php echo $offer_description; }?>
+	 				<?php if($offer_expiration_date!='') { ?>(<?php echo $offer_description;?>)<?php } ?>
+	 			</li>
+	 			<?php 
+		 		}
+		 	} 
+		 	?>
+		 </ul>
+		 <?php
 	     }
 	    
 	    if(isset($search->locations[0]->categories) && count($search->locations[0]->categories) > 0) {
 	    	?>
+	    	<br />
 			<div class="page-header">
-				<h3>Categories</h3>
+				<strong>Categories</strong>
 			</div> 
 			<ul>
 		     <?php   
@@ -257,30 +300,42 @@
 	      }
 	    
 	    if(isset($search->locations[0]->attributes) && count($search->locations[0]->attributes) > 0) {
-	    	?>
-			<div class="page-header">
-				<h3>Attributes</h3>
-			</div>
-			<ul>
-		     <?php  
+	    	
+	    	 $IsAtribute = false;
 	    	 $attributes = $search->locations[0]->attributes;
 	    	 foreach($attributes as $key => $value) {
-	    	 	if($value!='') {	
-					$attribute_id = $value->attribute_id;
-					$name = $value->name;
-					$value = $value->value;
-		 			?><li><?php echo $name;?> = <?php echo $value;?></li><?php 	
+	    	 	if($value!=''&&is_string($value)) {	
+					$IsAtribute = true;
 	    	 	}
-	    	 }
-		 	?>
-		 	</ul>
-		 	<?php	    	 
+	    	 }    	
+	    	
+	    	if($IsAtribute==true) 
+	    		{
+		    	?>
+				<div class="page-header">
+					<strong>Attributes</strong>
+				</div>    
+				<ul>
+			     <?php  
+		    	 $attributes = $search->locations[0]->attributes;
+		    	 foreach($attributes as $key => $value) {
+		    	 	if($value!=''&&is_string($value)) {	
+						$attribute_id = $value->attribute_id;
+						$name = $value->name;
+						$value = $value->value;
+			 			?><li><?php echo $name;?> = <?php echo $value;?></li><?php 	
+		    	 	}
+		    	 }
+		    	 ?>
+		    	 </ul>
+		    	 <?php
+	    	}
 	    }
 	    
 	    if(isset($search->locations[0]->tips) && count($search->locations[0]->tips) > 0) {
 	    	?>
 			<div class="page-header">
-				<h3>Tips</h3>
+				<strong>Tips</strong>
 			</div>    
 			<ul>
 		     <?php 
@@ -297,30 +352,41 @@
 	    	}
 	    
 	    if(isset($search->locations[0]->images) && count($search->locations[0]->images) > 0) {
-	    	?>
-			<div class="page-header">
-				<h3>Images</h3>
-			</div>  
-		     <?php
 	 		$images = $search->locations[0]->images;
-	 		foreach($images as $image){
-	 			$type = $image->type;
-	 			$height = $image->height;
-	 			$width = $image->width;
-	 			$image_url = $image->image_url;
-	 			$primary = $image->primary;
+	 		if(count($images)>0)
+	 			{
+	 			?>
+				<div class="page-header">
+					<strong>Images</strong>
+				</div>  
+				<center>	 			
+	 			<?php
+		 		foreach($images as $image){
+		 			$type = $image->type;
+		 			$height = $image->height;
+		 			$width = $image->width;
+		 			if($width>200||$width==0){ $width = 200; }
+		 			$image_url = $image->image_url;
+		 			$primary = $image->primary;
+		 			
+		 			$attribution_source = $image->attribution_source;
+		 			$attribution_logo = $image->attribution_logo;
+		 			$attribution_text = $image->attribution_text;
+		 			?><img src="<?php echo $image_url;?>" width="<?php echo $width;?>" style="padding: 15px;" /><?php	
+		 			} 
+		 			?>
+		 		</center>
+		 		<?php
+	 			}
+	 			?>
 	 			
-	 			$attribution_source = $image->attribution_source;
-	 			$attribution_logo = $image->attribution_logo;
-	 			$attribution_text = $image->attribution_text;
-	 			?><img src="<?php echo $image_url;?>" width="100" /><?php	
-	 			} 
+	 		<?php
 	    	}
 	    
 	    if(isset($search->locations[0]->editorials) && count($search->locations[0]->editorials) > 0) {
 	    	?>
 			<div class="page-header">
-				<h3>Editorials</h3>
+				<strong>Editorials</strong>
 			</div>     
 			<ul>
 		     <?php
@@ -356,7 +422,7 @@
 	    	
 	    	?>
 			<div class="page-header">
-				<h3>Reviews (<?php echo $total_user_reviews;?>)</h3>
+				<strong>Reviews (<?php echo $total_user_reviews;?>)</strong>
 			</div>  
 			<ul>
 		     <?php   
@@ -383,17 +449,22 @@
 	     
 		<br />
 		<?php
-		// Display a Web Ad that is 630 x 100
-		$adid = 5;
-		$publisher = 'citysearch';
-		$citygridad = new citygridads($publishercode);
-		?>
-		<div id="detail_ad_slot_<?php echo $adid; ?>" align="center"></div>
-		<?php
-		echo $citygridad->display_web_ad_630_100('detail_ad_slot_'.$adid,$publisher,$what,$where);						
+		// Only Display Ads if this record allows, otherwise against TOS / Usage Requirements
+		if($display_ad==1 && get_option('show_ads') == 'no') 
+			{	    
+			// Display a Web Ad that is 630 x 100
+			$adid = 3;
+			$publisher = 'citysearch';
+			$citygridad = new citygridads($publishercode);
+			?>
+			<div id="detail_ad_slot_<?php echo $adid; ?>" align="center"></div>
+			<?php
+			echo $citygridad->display_web_ad_630_100('detail_ad_slot_'.$adid,$publisher,$what,$where);
+			?>
+			<br />
+			<?php
+			}						
 		?>		     
-	     
-		<br />
 		<p align="center"><a href="?page_id=<?php echo $page_id;?>&what=<?php echo $what; ?>" class="btn large primary">Return to Main Page</a></p>
 				
 		<?php
@@ -404,26 +475,33 @@
 		// Search
 		?>
 		
-		<h3>
+		<strong>
 			<a href="#">Places</a> /
 			<a href="#"><?php echo $where;?></a> / 
 			<?php if($what!='') {?>
 				<a href="#"><?php echo $what;?></a>
 			<?php } ?>
-		</h3>
+		</strong>
 		
 		<br />
 		<?php
-		// Display a Web Ad that is 630 x 100
-		$adid = 1;
-		$publisher = 'citysearch';
-		$citygridad = new citygridads($publishercode);
+		// Only Display Ads if this record allows, otherwise against TOS / Usage Requirements
+		if(get_option('show_ads') == 'no') 
+			{	    
+			// Display a Web Ad that is 630 x 100
+			$adid = 4;
+			$publisher = 'citysearch';
+			$citygridad = new citygridads($publishercode);
+			?>
+			<div id="detail_ad_slot_<?php echo $adid; ?>" align="center"></div>
+			<?php
+			echo $citygridad->display_web_ad_630_100('detail_ad_slot_'.$adid,$publisher,$what,$where);
+			?>
+			<br />
+			<?php
+			}					
 		?>
-		<div id="detail_ad_slot_<?php echo $adid; ?>" align="center"></div>
-		<?php
-		echo $citygridad->display_web_ad_630_100('detail_ad_slot_'.$adid,$publisher,$what,$where);						
-		?>
-		
+		<center>
 		<table cellpadding="2" cellspacing="2" width="90%" border="0">
 			<tbody>
 			<?php
@@ -438,7 +516,9 @@
 				//Get All Active APIs
 				$citygrid = new citygridplaces($publishercode);
 				$search = $citygrid->srch_places_where($what,$type,$where,$page,$rpp,$sort,$format,$placement,$has_offers,$histograms,$i);
-							
+				
+				$NumberOfPlaces = count($search);
+				
 				foreach($search as $place) 
 					{
 						
@@ -491,8 +571,9 @@
 						            <?php echo $city; ?>, <?php echo $state; ?><br />
 						         </address>							
 							</td>
-							<td align="left" valign="middle" width="7%" style="padding-top: 40px;">
-								<a href="?page_id=<?php echo $page_id;?>&id=<?php echo $public_id; ?>&what=<?php echo $what; ?>&where=<?php echo $where; ?>" class="btn small primary">Detail</a>
+							<td align="left" valign="middle" width="15%" style="padding-top: 40px;">
+								<br style="padding-top: 15px;" />
+								<a href="?page_id=<?php echo $page_id;?>&id=<?php echo $public_id; ?>&what=<?php echo $what; ?>&where=<?php echo $where; ?>" class="btn small primary">View Detail</a>
 							</td>
 						</tr>				        
 				        <?php					
@@ -502,30 +583,30 @@
 				?>	
 			<tbody>
 		</table>
-		
+		</center>
 		<center>
-			<table cellpadding="5" cellspacing="5" width="90%" align="center">
+			<table cellpadding="5" cellspacing="5" width="100%">
 				<tr>
 					<?php
 					if($maxpage>15) { $maxpage = 15; }
 					?>
 					<?php if($maxpage>1){?>
-					<td width="25%" align="left">
-						<a href="?page_id=<?php echo $page_id;?>&what=Architects&page=<?php echo $page-1;?>">&larr; Previous</a>
+					<td width="25%" align="left" style="text-align:left;">
+						<a href="?page_id=<?php echo $page_id;?>&what=<?php echo $what; ?>&page=<?php echo $page-1;?>">&larr; Previous</a>
 					</td>
 					<?php } ?>
-					<?
+					<?php
 					for ( $counter = 1; $counter <= $maxpage; $counter += 1) 
 						{
 						?>  
-							<td>	
-								<a href="?page_id=<?php echo $page_id;?>&what=<?php echo $what; ?>&page=<?php echo $counter;?>"><?php echo $counter;?></a>
-							</td>
-						<?
+						<td style="width: 10px; text-align: center;">	
+							<a href="?page_id=<?php echo $page_id;?>&what=<?php echo $what; ?>&page=<?php echo $counter;?>"><?php echo $counter;?></a>
+						</td>
+						<?php
 						}		
 					?>
 					<?php if(round($page)!=round($maxpage)){?>
-						<td width="25%" align="right">
+						<td width="25%" align="right" style="text-align:right;">
 							<a href="?page_id=<?php echo $page_id;?>&what=<?php echo $what; ?>&page=<?php echo $page+1;?>">Next &rarr;</a>
 						</td>
 					<?php } ?>
@@ -535,26 +616,59 @@
 		
 		<br />
 		<?php
-		// Display a Web Ad that is 630 x 100
-		$adid = 2;
-		$publisher = 'citysearch';
-		$citygridad = new citygridads($publishercode);
-		?>
-		<div id="detail_ad_slot_<?php echo $adid; ?>" align="center"></div>
-		<?php
-		echo $citygridad->display_web_ad_630_100('detail_ad_slot_'.$adid,$publisher,$what,$where);						
+		// Only Display Ads if this record allows, otherwise against TOS / Usage Requirements
+		if(get_option('show_ads') == 'no') 
+			{	    
+			// Display a Web Ad that is 630 x 100
+			$adid = 5;
+			$publisher = 'citysearch';
+			$citygridad = new citygridads($publishercode);
+			?>
+			<div id="detail_ad_slot_<?php echo $adid; ?>" align="center"></div>
+			<?php
+			echo $citygridad->display_web_ad_630_100('detail_ad_slot_'.$adid,$publisher,$what,$where);
+			?>
+			<br />
+			<?php
+			}
+			
 		}
 		?>		
-		
-		<br />
-		<div>
-			<!---CityGrid Attribution-->
-			<p align="right">
+
+	<center>
+	<table cellpadding="5" cellspacing="5">
+		<tr>
+			<td width="175">
+			
+				<!---CityGrid Attribution-->
 				<span style="margin-left: 5px;"><strong>Powered by</strong>&nbsp;&nbsp;&nbsp;</span><br />
-				<img src="http://kinlane-productions.s3.amazonaws.com/citygrid/citygrid_logo.jpg" width="150" />
-			</p>
-		</div>		
-	
+				<a href="http://citygrid.com/">
+					<img src="http://kinlane-productions.s3.amazonaws.com/citygrid/citygrid_logo.jpg" width="150" />
+				</a>
+				
+			</td>		
+			<td width="175">
+			
+				<!---InfoGroup Attribution-->
+				<span style="margin-left: 5px;"><strong>Data from</strong>&nbsp;&nbsp;&nbsp;</span><br />
+				<a href="http://www.infogroup.com/">
+					<img src="http://kinlane-productions.s3.amazonaws.com/citygrid/infogroup_logo_250.png" width="150" />
+				</a>
+				
+			</td>
+			<td valign="middle">
+				<!---CopyRight--> 
+				<?php 
+				$Current_Year = date('Y');
+				?>
+				<br />
+				<span><strong>&copy;&nbsp;<?php echo $Current_Year; ?></strong></span>
+		
+			</td>			
+		</tr>
+	</table>
+	</center>
+	<br />
 	</div>
 </div>
 
