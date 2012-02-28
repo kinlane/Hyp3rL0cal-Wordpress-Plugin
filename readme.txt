@@ -1,35 +1,33 @@
-=== Hyp3rL0cal Wordpress Plugin ===
-Contributors: hyp3rl0cal.com
-Tags: wordpress, citygrid, hyp3rl0cal, cities, directory, local
+=== CtyGrid Hyp3rL0cal Wordpress Plugin ===
+Contributors: kinlane
+Tags: wordpress plugin, plugin, citygrid, local, directory, cities
 Requires at least: 2.8
 Tested up to: 3.1
 Stable tag: "0.1.1.2"
 
-This is a prototype local web directory that uses the City Places and Advertising API - http://developer.citygridmedia.com
+Plugin for deploying a local business directory, using the CityGrid API
 
 == Description ==
 
-STILL BETA Use this emtpy wordpress plugin template to build your own.
+CityGrid provides a wealth of content from local businesses and places. Using the CityGrid API you can pull places including their address, city, state, zip code and phone number. You can also pull a wealth of other content including photos, videos, reviews and offers.
 
+This Wordpress plug allows you deploy a local business directory for any Wordpress blog.  
 
-Every important point will have it's own page to explain.
+To use this module you will need to register for a CityGrid publisher account at http://developer.citygridmedia.com/. The system will work temporarily without a publisher code, but if you wish to take advantage of advertising or revenue sharing opportunities, and have it work reliably, you will need to have your own publisher code.
 
-= Including: =
-* multi language ability
-* uninstall routine
-* data delete routine (avoid orphaned data)
-* coding advices
-* security aspects (validating user inputs, nonces)
-* external third party stuff (Ajax, CSS, Javascript)
-* shortcode
-* Wordpress scheduler ("cronjob")
-* logfiles
-* capabilities
+Once you have your publisher code you can enter it on the plugin settings page.
+
+After setting your publisher code you can choose the location you will pull your business listings from. A location is "where" you want to provide a search for, this can include: Cities, Neighborhoods, Zip Codes, Metro Areas, Addresses and Intersections. 
+
+Next choose "what" categories you would like to have in your directory.  Categories can be any keyword you wish, such as pizza, sushi or tires.  For examples visit any CitySearch (http://citysearch.com/) site, and browse other categories.   Enter your categories separated by commas in your settings, hit save and it will build out a separate directory page for each category.
+
+Additionally you can also choose to display or not display CityGrid ads on your Hyp3rL0cal directory. 
+
+If you have any questions visit the CityGrid Developer Forum or follow us on Twitter using @citygridapiteam.
 
 == Installation ==
 
-ONLY USE THIS FOR LOCAL DEVELOPMENT
-1. Upload EPT Empty Plugin Template  to the `/wp-content/plugins/` directory
+1. Upload CityGrid Hyp3rL0cal Wordpress Pluging to the `/wp-content/plugins/` directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
 3. Adjust settings
 
@@ -56,9 +54,13 @@ Post a comment on https://groups.google.com/forum/?hl=en#!forum/citygrid-dev-tal
 
 http://wordpress-local-directory.hyp3rl0cal.com/
 
+= Do you have other plugins?  =
+
+Check out my other [Wordpress Plugins](http://wordpress.org/extend/plugins/profile/1manfactory)
+
 = Where do I post my feedback? =
 
-CityGrid Developepr Forums: https://groups.google.com/forum/?hl=en#!forum/citygrid-dev-talk
+Post a comment on https://groups.google.com/forum/?hl=en#!forum/citygrid-dev-talk
 
 == Upgrade Notice ==
 
@@ -66,17 +68,7 @@ Just do a normal upgrade.
 
 == Changelog ==
 
-= 0.1.1.2 (03.03.2011) =
-* adding submenus
-
-= 0.1.1.1 (24.02.2011) =
-* small bugfix
-* testing on Wordpress 3.1
-
-= 0.1.1 (22.02.2011) =
-* logfile handling
-
-= 0.1 (17.02.2011) =
+= 0.1 (02/27/2012) =
 * first version
 
 == Upgrade Notice ==
@@ -85,4 +77,4 @@ Just do a normal upgrade.
 
 == To do ==
 
-More translations. Does someone wants to help?
+Finish making billable approved

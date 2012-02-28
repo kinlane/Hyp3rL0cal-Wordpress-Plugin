@@ -1,0 +1,14 @@
+
+    <div style="width: 700px; margin-left: 25px; " class="wrap"> 
+      <h2>CityGrid Hyp3rl0cal - San Francisco Wordpress Plugin</h2> 
+      <p><img style="padding-top: 15px; padding-right: 15px; padding-bottom: 15px; padding-left: 15px; " width="200" align="right" src="http://kinlane-productions.s3.amazonaws.com/citygrid/citygrid_logo.jpg" />CityGrid provides a wealth of content from local businesses and places.  Using the <a href="http://developer.citygridmedia.com">CityGrid API</a> you can pull places including their address, city, state, zip code and phone number.  You can also pull a wealth of other content including photos, videos, reviews and offers.</p> 
+      <p>This Wordpress plug allows you deploy a local business directory for any Wordpress blog. &nbsp;</p> 
+      <p><img style="padding-top: 15px; padding-right: 15px; padding-bottom: 15px; padding-left: 15px; " width="300" align="right" src="http://kinlane-productions.s3.amazonaws.com/citygrid/CityGrid.png" />To use this module you will need to <a href="http://developer.citygridmedia.com/dashboard/registration">register for a CityGrid publisher</a>.  The system will work temporarily without a publisher code, but if you wish to take advantage of advertising or revenue sharing opportunities, have it work reliably, you will need to have your own publisher code.</p> 
+      <p>Once you have your publisher key you can enter it on the <a href="?page=%20%20%20<?php echo CG_PLUGIN_DIRECTORY . '/cg_settings_page.php'; ?>%20%20%20">plugin settings page</a>.</p> 
+      <p>After setting your publisher key you can choose location you will pull your business listings from, A location of &quot;where&quot; you want to provide a search for, this can include: Cities, Neighborhoods, Zip Codes, Metro Areas, Addresses and Intersections.&nbsp;</p>
+      <p>Next choose &quot;what&quot; categories you would like to have in your directory. &nbsp;Categories can be any keyword you wish, such as pizza, sushi or tires. &nbsp;For examples visit any CitySearch site, and browse other categories. &nbsp; Enter your categories separated by commas in your settings, hit save and it will build out a separate directory page for each category.</p> 
+      <p> </p> 
+      <p>Additionally you can also choose to display or not display CityGrid ads on your Hyp3rL0cal directory.&nbsp;</p> 
+      <p>If you have any questions visit the <a href="https://groups.google.com/forum/?hl=en#!forum/citygrid-dev-talk">CityGrid Developer Forum</a> or follow us on Twitter using <a href="https://twitter.com/#!/CityGridAPITeam">@citygridapiteam</a>.</p> 
+    </div> 
+  

@@ -1,18 +1,18 @@
 <?php
 /*
-Plugin Name: CityGrid
+Plugin Name: CityGrid Hyp3rL0cal Directory
 Plugin URI: 
-Description: CityGrid Hyp3rL0cal Directoy
+Description: CityGrid Hyp3rL0cal Directory
 Version: 0.1.1.1
-Author: Kin Lane kinlane@gmail.com
+Author: Kin Lane kin.lane@citygridmedia.com
 Author URI: http://developer.citygridmedia.com
 License: GPL2
 */
 ?><?php
 
 // some definition we will use
-define( 'CG_PUGIN_NAME', 'CityGrid');
-define( 'CG_PLUGIN_DIRECTORY', 'citygrid');
+define( 'CG_PUGIN_NAME', 'CityGrid Hyp3rL0cal');
+define( 'CG_PLUGIN_DIRECTORY', 'hyp3rl0cal-wordpress-plugin');
 define( 'CG_CURRENT_VERSION', '0.1.1.1' );
 define( 'CG_CURRENT_BUILD', '3' );
 define( 'CG_LOGPATH', str_replace('\\', '/', WP_CONTENT_DIR).'/cg-logs/');
@@ -22,7 +22,7 @@ define( 'CG_DEBUG', false);
 define( 'EMU2_I18N_DOMAIN', 'cg' );
 
 // how to handle log files, don't load them if you don't log
-require_once('cg_logfilehandling.php');
+require_once('cg-logfilehandling.php');
 
 // load language files
 function cg_set_lang_file() {
@@ -57,21 +57,21 @@ function cg_scripts_method() {
 
 // activating the default values
 function cg_activate() {
-	add_option('cg_option_3', 'any_value');
+	add_option('cg-option_3', 'any_value');
 }
 
 // deactivating
 function cg_deactivate() {
 	// needed for proper deletion of every option
-	delete_option('cg_option_3');
+	delete_option('cg-option_3');
 }
 
 // uninstalling
 function cg_uninstall() {
 	# delete all data stored
-	delete_option('cg_option_3');
+	delete_option('cg-option_3');
 	// delete log files and folder only if needed
-	if (function_exists('cg_deleteLogFolder')) cg_deleteLogFolder();
+	if (function_exists('cg-deleteLogFolder')) cg-deleteLogFolder();
 }
 
 function cg_create_menu() {
@@ -81,39 +81,43 @@ function cg_create_menu() {
 	__('CityGrid', EMU2_I18N_DOMAIN),
 	__('CityGrid', EMU2_I18N_DOMAIN),
 	0,
-	CG_PLUGIN_DIRECTORY.'/cg_main_page.php',
+	CG_PLUGIN_DIRECTORY.'/cg-main.php',
 	'',
 	plugins_url('/images/icon.png', __FILE__));
 	
 	
 	add_submenu_page( 
-	CG_PLUGIN_DIRECTORY.'/cg_main_page.php',
+	CG_PLUGIN_DIRECTORY.'/cg-main.php',
 	__("Main", EMU2_I18N_DOMAIN),
 	__("Main", EMU2_I18N_DOMAIN),
 	0,
-	CG_PLUGIN_DIRECTORY.'/cg_main_page.php'
+	CG_PLUGIN_DIRECTORY.'/cg-main.php'
 	);	
 	
 	add_submenu_page( 
-	CG_PLUGIN_DIRECTORY.'/cg_main_page.php',
+	CG_PLUGIN_DIRECTORY.'/cg-main.php',
 	__("Settings", EMU2_I18N_DOMAIN),
 	__("Settings", EMU2_I18N_DOMAIN),
 	0,
-	CG_PLUGIN_DIRECTORY.'/cg_settings_page.php'
-	);	
-
+	CG_PLUGIN_DIRECTORY.'/cg-settings.php'
+	);		
 	
-	
-	$the_page_title = "Hyp3rL0cal";
-	$the_page_body = "<p>Welcome to the CityGrid Hyp3rL0cal Directory</p>";
-	
+	if(!get_option('directory_label'))
+		{
+		$the_page_title = "Directory";
+		}	
+	else
+		{
+		$the_page_title = get_option('directory_label');
+		}
+	//echo "HERE: " . $the_page_title . "<br />";
 	$the_page = get_page_by_title( $the_page_title );
 	
 	if ( ! $the_page ) {
 	
 	    $_p = array();
 	    $_p['post_title'] = $the_page_title;
-	    $_p['post_content'] = '';
+	    $_p['post_content'] = "<p>Welcome to the CityGrid Hyp3rL0cal Directory</p>";
 	    $_p['post_status'] = 'publish';
 	    $_p['post_type'] = 'page';
 	    $_p['comment_status'] = 'closed';
@@ -121,18 +125,8 @@ function cg_create_menu() {
 	    // Insert the post into the database
 	    $the_page_id = wp_insert_post( $_p );
 	    
-	    update_post_meta( $the_page_id, '_wp_page_template', 'cg-search.php' );
-	
-	}
-	else {
-
-	    $the_page_id = $the_page->ID;
-	
-	    $the_page->post_status = 'publish';
-	    $the_page_id = wp_update_post( $the_page );
+	    update_post_meta( $the_page_id, '_wp_page_template', 'cg-directory.php' );
 	    
-	    update_post_meta( $the_page_id, '_wp_page_template', 'cg-search.php' );
-	
 	}	
 	
 }
@@ -145,20 +139,55 @@ function catch_plugin_template($template) {
 	
     // If tp-file.php is the set template
     if( is_page_template('cg-search.php') )
-    
+    	{
         // Update path(must be path, use WP_PLUGIN_DIR and not WP_PLUGIN_URL) 
-        $template = WP_PLUGIN_DIR . '/citygrid/cg-search.php';
+        $template = WP_PLUGIN_DIR . '/hyp3rl0cal-wordpress-plugin/cg-search.php';
+    	}
+    	
+    // If tp-file.php is the set template
+    if( is_page_template('cg-directory.php') )
+    	{
+        // Update path(must be path, use WP_PLUGIN_DIR and not WP_PLUGIN_URL) 
+        $template = WP_PLUGIN_DIR . '/hyp3rl0cal-wordpress-plugin/cg-directory.php';
+    	}    	
+        
     // Return
     return $template;
 }
 
 
 function cg_register_settings() {
+	
 	//register settings
+	register_setting( 'cg-settings-group', 'directory_label' );
+	
+	if(!get_option('directory_label'))
+		{
+		update_option( 'directory_label', 'Directory' );
+		}
+	
 	register_setting( 'cg-settings-group', 'what' );
 	register_setting( 'cg-settings-group', 'where' );
+	
+	if(!get_option('where'))
+		{	
+		update_option( 'where', 'West Hollywood, CA' );
+		}
+		
 	register_setting( 'cg-settings-group', 'publishercode' );
+	
+	if(!get_option('publishercode'))
+		{	
+		update_option( 'publishercode', 'test' );
+		}
+		
 	register_setting( 'cg-settings-group', 'show_ads' );
+	
+	if(!get_option('show_ads'))
+		{	
+		update_option( 'show_ads', 'yes' );
+		}
+	
 }
 
 // check if debug is activated
