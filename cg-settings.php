@@ -4,6 +4,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 	
 	update_option( 'publishercode', $_POST['publishercode']);
 	update_option( 'what', $_POST['what']);
+	update_option( 'where', $_POST['where']);
 	
 	// Get the old directory page ID
 	$parent_page = get_page_by_title( get_option('directory_label') );	
